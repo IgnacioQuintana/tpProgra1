@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="quintana-tp-p1/src/juego/|quintana-tp-p1/src/juego/" kind="src" path=""/>
+	<classpathentry kind="src" path="quintana-tp-p1/src/juego"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

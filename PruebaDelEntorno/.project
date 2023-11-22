@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/media</name>
-			<type>2</type>
-			<location>C:/Users/USUARIO/Desktop/Nueva carpeta (2)/PruebaDelEntorno/src/media</location>
-		</link>
-	</linkedResources>
 </projectDescription>
