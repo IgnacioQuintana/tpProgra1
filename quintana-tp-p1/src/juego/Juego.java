@@ -15,18 +15,18 @@ public class Juego extends InterfaceJuego {
 	private int timer;
 	private Image fondo;
 	private Image plantas_Muertas;
-	private int plantasMuertas = 0;
+	private int contPlantasMuertas = 0;
 	private int puntos = 0;
 	private Manzana[] manzanas;
 	private Auto[] autos;
 	private Planta[] plantas;
 	private int mov;
-	int prueba=0;
+
 	
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "Plantas Invasoras - Grupo 13 - Quintana - V0.01", 800, 600);
-
+		
 		// Inicializar lo que haga falta para el juego
 		crearAutos();
 		crearManzanas();
@@ -69,13 +69,13 @@ public class Juego extends InterfaceJuego {
 		//Crea y verifica colisiones del disparo
 		veDisparoPlantas();
 		colisionConAuto();
-		//colisionConPlanta();
+		colisionConPlanta();
 		
 		//dibuja la puntuacion
 		entorno.cambiarFont("Arial Black", 14, Color.BLACK);
 		entorno.escribirTexto("Puntos: "+puntos, 720, 30);
 		entorno.dibujarImagen(plantas_Muertas, 20, 30, 0, 0.08);
-		entorno.escribirTexto(" X"+plantasMuertas, 30, 40);
+		entorno.escribirTexto(" X"+contPlantasMuertas, 30, 40);
 
 	}
 
@@ -148,7 +148,7 @@ public class Juego extends InterfaceJuego {
 		plantas = new Planta[5];
 		plantas[0] = new Planta(80, 500, 2);// superior izquierda, baja
 		plantas[1] = new Planta(635, 400, 1);// inferior derecha, sube
-		plantas[2] = new Planta(600, 110, 3); // superior derecha, izquierda
+		plantas[2] = new Planta(800, 110, 3); // superior derecha, izquierda
 		plantas[3] = new Planta(780, 445, 3);// inferior derecha, izquierda
 		plantas[4] = new Planta(420, 40, 2);// medio arriba, baja
 
@@ -178,7 +178,7 @@ public class Juego extends InterfaceJuego {
 					}
 					if (i == 2) {
 						plantas[i].setMuerto(false);
-						plantas[i].setX(600);
+						plantas[i].setX(800);
 						plantas[i].setY(110);
 					}
 					if (i == 3) {
@@ -299,14 +299,15 @@ public class Juego extends InterfaceJuego {
 		if(disparoLayka != null) {
 			disparoLayka.dibujar(entorno);
 			disparoLayka.mover();			
-			plantasMuertas=disparoLayka.impactastePlanta(plantas);
+			int plantasMuertas=disparoLayka.impactastePlanta(plantas);
 			
 			if(plantasMuertas !=-1) {	
-				plantasMuertas=plantasMuertas+1;
 				plantas[plantasMuertas].setMuerto(true);
+				contPlantasMuertas=contPlantasMuertas+1;				
 				disparoLayka=null;	
 				puntos += 5;
 			}
+			if(this.disparoLayka!=null) {
 			if(disparoLayka.impactasteAuto(autos) != -1) {
 				disparoLayka = null;
 			}
@@ -314,32 +315,27 @@ public class Juego extends InterfaceJuego {
 				if(disparoLayka.chocoConEntorno(entorno)){					
 					disparoLayka = null;
 				}				
-			}	
+			}	}
 		}
 	}
 	public void colisionConPlanta() {
 		if(Layka.chocasteConPlantaEnX(plantas)){
-			System.out.println("PERDISTE");
-			Herramientas.cargarImagen("media/perdiste.png");
-			Herramientas.cargarSonido("media/derrota.wav");
+
+			entorno.dispose();
 		}
 		if(Layka.chocasteConPlantaEnY(plantas)) {
-			System.out.println("PERDISTE");
-			Herramientas.cargarImagen("media/perdiste.png");
-			Herramientas.cargarSonido("media/derrota.wav");
+			
+			entorno.dispose();
 		}
 	}
 	
 	public void colisionConAuto() {
 		if(Layka.chocasteConAutoEnX(autos)){
-			System.out.println("PERDISTE");
-			Herramientas.cargarImagen("media/perdiste.png");
-			Herramientas.cargarSonido("media/derrota.wav");
+			
+			entorno.dispose();
 		}
 		if(Layka.chocasteConAutoEnY(autos)) {
-			System.out.println("PERDISTE");
-			Herramientas.cargarImagen("media/perdiste.png");
-			Herramientas.cargarSonido("media/derrota.wav");
+			entorno.dispose();
 		}
 	}
 	
